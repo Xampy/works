@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Banque - Gestion des demandes de crédit : Enrégistrement d'une demande</title>
+    </h:head>
+
+    <h:body>
+        <ui:composition template="../../templates/layout.xhtml">
+            <ui:define name="body-content"> 
+                <div class="row">
+                    <div class="col-md-12 text-left d-flex justify-content-start">
+                        <h3>Enregrisrement d'une nouvelle demande</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right d-flex justify-content-end">
+                        <a class="btn btn-success" href="#{request.contextPath}/pages/demande/list.xhtml">Liste des demandes</a>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-6 mx-auto">
+                        <h:form>
+                            <div class="form-group">
+                                <label for="client" class="form-label">Client</label> 
+                                <div class="w-100">
+                                    <p:selectOneMenu id="group" class="w-100" value="#{demandeCreditBean.selectedClientId}">
+                                        <f:selectItems value="#{demandeCreditBean.clientSelectOptions}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="montant" class="form-label">Montant</label>
+                                <h:inputText id="montant" class="form-control" value="#{demandeCreditBean.demandeCredit.montant}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateDemande" class="form-label">Date de la demande</label>
+                                <!--<h:inputText id="dateDemande" class="form-control" value="#{demandeCreditBean.demandeCredit.dateDemande}"/>-->
+                                <p:datePicker inputStyle="w-100"  style="width: 100%" styleClass="w-100" value="#{demandeCreditBean.choosedDate}" pattern="dd.MM.yyyy"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="taux" class="form-label">Taux  (exprimé en pourcentage)</label>
+                                <h:inputText  id="taux" class="form-control" value="#{demandeCreditBean.demandeCredit.taux}"/>
+                                <small class="text-muted">Exemple: Pour 5%, on mettra 5</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="duree" class="form-label">Duree (exprimé en année)</label>
+                                <h:inputText id="duree" class="form-control" value="#{demandeCreditBean.demandeCredit.duree}"/>
+                            </div>
+                            
+                            <h:commandButton value="Enrégistrer Demande de crédit" action="#{demandeCreditBean.saveDemande()}"
+                                             class="btn btn-success w-100 mt-3"></h:commandButton>
+                        </h:form>
+                    </div>
+                </div>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+
+
+</html>

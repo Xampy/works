@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Banque- Gesstion des demandes de crédits : Liste des Demandes de crédits</title>
+    </h:head>
+
+
+    <h:body>
+        <ui:composition template="../../templates/layout.xhtml">
+            <ui:define name="body-content"> 
+                <div class="row">
+                    <div class="col-md-12 text-left d-flex justify-content-start">
+                        <h3>Liste des demandes de crédit</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right d-flex justify-content-end">
+                        <a class="btn btn-success" href="#{request.contextPath}/pages/demande/create.xhtml">Nouvelle Demande de crédit</a>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-11 mx-auto">
+                        <p:dataTable id="etudiantsList" var="d" value="#{demandeCreditBean.demandesCreditList}">
+                            <p:column headerText="Date Demande"> 
+                                <h:outputText value="#{d.dateDemande}"/>
+                            </p:column>
+                            <p:column headerText="Approbe?"> 
+                                <h:outputText value="#{d.approbe ? 'Oui' : 'Non' }"/>
+                                <c:if test="#{d.approbe == true}">
+                                    <span class="badge badge-success rounded-pill" >Oui</span>
+                                </c:if>
+                                <c:choose>
+                                    <c:when test="#{d.approbe}">
+                                        <span class="badge badge-success rounded-pill" >Oui</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="badge badge-danger rounded-pill" >Oui</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </p:column>
+                            <p:column headerText="Date d'Approbation"> 
+                                <h:outputText value="#{d.dateEffective == null ? 'Pas encore approbé' : d.dateEffective }"/>
+                            </p:column>
+                            <p:column headerText="Client"> 
+                                <h:outputText value="#{d.client.nom} #{d.client.prenom}"/>
+                            </p:column>
+                            <p:column headerText="Action"> 
+                                <h:form>
+                                    <div class="d-flex justify-content-between">
+                                        <h:commandButton  class="btn btn-sm btn-success" action="#{demandeCreditBean.acceptDemane(d.id)}" value="Approber" />
+                                        <h:commandButton  class="btn btn-sm btn-danger" action="#{demandeCreditBean.delete(d.id)}" value="Supprimer" />
+                                        <h:link class="btn btn-sm btn-primary" value="Modifier" outcome="create" includeViewParams="true">
+                                            <f:param value="#{d.id}" name="demandeId" />
+                                        </h:link>
+                                    </div>
+                                </h:form>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
